@@ -1,0 +1,82 @@
+/*
+
+    Name:       Base16 {{scheme-name}} Dark
+    Author:     {{scheme-author}}
+
+    CodeMirror template adapted for IPython Notebook by Nikhil Sonnad (https://github.com/nsonnad/base16-ipython-notebook)
+    CodeMirror template by Jan T. Sott (https://github.com/idleberg/base16-chrome-devtools)
+    Original Base16 color scheme by Chris Kempson (https://github.com/chriskempson/base16)
+
+*/
+
+/*
+    Jupyter GLOBALS
+*/
+
+div.cell.edit_mode {
+  border: thin #{{base0B-hex}} solid !important;
+}
+
+.edit_mode div.cell.selected{
+  border-color: #{{base0A-hex}};
+}
+
+.CodeMirror pre {
+  font-family: 'Menlo', 'Ubuntu Mono', monospace;
+  font-size: 12px;
+}
+
+div.cell.selected {
+  border-color: #{{base0C-hex}};
+}
+
+div.input_prompt {
+  color: #{{base0D-hex}};
+}
+
+div.output_prompt {
+  color: #{{base08-hex}};
+}
+
+/*
+     GLOBALS
+*/
+
+span.ansiblack {color: #{{base01-hex}};}
+span.ansiblue {color: #{{base0D-hex}};}
+span.ansigray {color: #{{base04-hex}};}
+span.ansigreen {color: #{{base0B-hex}};}
+span.ansipurple {color: #{{base0E-hex}};}
+span.ansired {color: #{{base08-hex}};}
+span.ansiyellow {color: #{{base0A-hex}};}
+
+div.output_stderr {background-color: #{{base00-hex}};}
+div.output_stderr pre {color: #{{base06-hex}};}
+
+.cm-s-ipython.CodeMirror {background: #{{base00-hex}}; color: #{{base06-hex}};}
+.cm-s-ipython div.CodeMirror-selected {background: #{{base01-hex}} !important;}
+.cm-s-ipython .CodeMirror-gutters {background: #{{base01-hex}}; border-right: 0px;}
+.cm-s-ipython .CodeMirror-linenumber {color: #{{base03-hex}};}
+.cm-s-ipython .CodeMirror-cursor {border-left: 1px solid #{{base04-hex}} !important;}
+
+.cm-s-ipython span.cm-comment {color: #{{base03-hex}};}
+.cm-s-ipython span.cm-atom {color: #{{base0E-hex}};}
+.cm-s-ipython span.cm-number {color: #{{base09-hex}};}
+
+.cm-s-ipython span.cm-property, .cm-s-ipython span.cm-attribute {color: #{{base08-hex}};}
+.cm-s-ipython span.cm-keyword {color: #{{base0E-hex}};}
+.cm-s-ipython span.cm-string {color: #{{base0B-hex}};}
+.cm-s-ipython span.cm-operator {color: #{{base07-hex}};}
+.cm-s-ipython span.cm-builtin {color: #{{base0D-hex}};}
+
+.cm-s-ipython span.cm-variable {color: #{{base06-hex}};}
+.cm-s-ipython span.cm-variable-2 {color: #{{base0D-hex}};}
+.cm-s-ipython span.cm-def {color: #{{base0A-hex}};}
+.cm-s-ipython span.cm-error {background: #{{base08-hex}}; color: #{{base04-hex}};}
+.cm-s-ipython span.cm-bracket {color: #{{base07-hex}};}
+.cm-s-ipython span.cm-tag {color: #{{base08-hex}};}
+.cm-s-ipython span.cm-link {color: #{{base0E-hex}};}
+.cm-s-ipython span.cm-meta {color: #{{base08-hex}};}
+
+.cm-s-ipython .CodeMirror-matchingbracket { text-decoration: underline; color: #{{base06-hex}} !important;}
+
