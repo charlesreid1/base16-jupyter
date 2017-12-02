@@ -7,6 +7,9 @@
     CodeMirror template by Jan T. Sott (https://github.com/idleberg/base16-chrome-devtools)
     Original Base16 color scheme by Chris Kempson (https://github.com/chriskempson/base16)
 
+.widget-readout
+.widget-label
+
 */
 
 /* Uncomment to use a custom font
@@ -19,6 +22,10 @@ div#notebook, div.CodeMirror, div.output_area pre, div.output_wrapper, div.promp
 body.notebook_app {background-color: #28211c;}
 .notebook_app {background-color: #28211c;}
 div#notebook-container {background-color: #28211c;}
+
+/* ipython notebook widgets */
+div.widget-label, div.widget-readout {color: #8a8986;}
+
 a {color: #5ea6ea;}
 
 /* INTRO PAGE */
