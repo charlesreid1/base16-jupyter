@@ -24,7 +24,9 @@ body.notebook_app {background-color: #28211c;}
 div#notebook-container {background-color: #28211c;}
 
 /* ipython notebook widgets */
-div.widget-label, div.widget-readout {color: #8a8986;}
+label.widget-label, div.widget-readout {color: #8a8986;} 
+div.widget-inline-hbox div.widget-readout {color: #8a8986;} 
+div.widget-inline-hbox label.widget-label {color: #8a8986;} 
 
 a {color: #5ea6ea;}
 
