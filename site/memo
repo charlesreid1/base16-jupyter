@@ -1,0 +1,24 @@
+To install gulp:
+
+npm install --save-dev gulp
+npm install --global gulp-cli
+npm install gulp-sass --save-dev
+npm install gulp-header
+npm install gulp-clean-css
+npm install gulp-rename
+npm install gulp-uglify
+npm install gulp-install
+npm install gulp-filter
+
+npm install browser-sync
+npm install -f bootstrap
+
+
+This will result in a node_modules directory. This should not be committed - add to .gitignore.
+
+
+To run gulp:
+
+gulp
+
+
