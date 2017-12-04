@@ -10,6 +10,8 @@ using Chris Kempson's Base16 color scheme generator
 
 see [TODO.md](/TODO.md)
 
+![Monokai](/img/Monokai.png)
+
 ## How It Works
 
 This uses a template CSS file in templates (default.mustache) that is 
