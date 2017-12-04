@@ -9,7 +9,8 @@
 cp colors/base16-bespin.css ~/.jupyter/custom/custom.css
 
 CONFIG_DIR="$HOME/.jupyter"
-THEME="monokai"
+#THEME="monokai"
+THEME="bespin"
 
 
 CUSTOM_DIR="$CONFIG_DIR/custom"
