@@ -42,7 +42,7 @@ div.output_prompt {
 CMR
 */
 
-body {background-color: #f7f7f7;}
+body {color: #252525; background-color: #f7f7f7;}
 body.notebook_app {background-color: #f7f7f7;}
 
 .notebook_app {background-color: #f7f7f7;}
@@ -63,8 +63,8 @@ a {color: #5ea6ea;}
 /* cmr NOTEBOOK */
 
 /* comment out this line to bring the toolbar back */
-/*
 div#maintoolbar, div#header {display: none !important;}
+/*
 */
 
 div#notebook {border-top: none;}
