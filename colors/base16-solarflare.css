@@ -1,0 +1,223 @@
+/*
+
+    Name:       Base16 Solar Flare Dark
+    Author:     Chuck Harmston (https://chuck.harmston.ch)
+
+    CodeMirror template adapted for IPython Notebook by Nikhil Sonnad (https://github.com/nsonnad/base16-ipython-notebook)
+    CodeMirror template by Jan T. Sott (https://github.com/idleberg/base16-chrome-devtools)
+    Original Base16 color scheme by Chris Kempson (https://github.com/chriskempson/base16)
+
+*/
+
+/*
+    Jupyter GLOBALS
+*/
+
+div.cell.edit_mode {
+  border: thin #7CC844 solid !important;
+}
+
+.edit_mode div.cell.selected{
+  border-color: #E4B51C;
+}
+
+.CodeMirror pre {
+  font-family: 'Menlo', 'Ubuntu Mono', monospace;
+  font-size: 12px;
+}
+
+div.cell.selected {
+  border-color: #52CBB0;
+}
+
+div.input_prompt {
+  color: #33B5E1;
+}
+
+div.output_prompt {
+  color: #EF5253;
+}
+
+/*
+CMR
+*/
+
+body {background-color: #18262F;}
+body.notebook_app {background-color: #18262F;}
+
+.notebook_app {background-color: #18262F;}
+div#notebook-container {background-color: #18262F;}
+div#notebook {background-color: #18262F;}
+div.input_area {background-color: #18262F;}
+
+/* ipython notebook widgets */
+label.widget-label, div.widget-readout {color: #A6AFB8;} 
+div.widget-inline-hbox div.widget-readout {color: #A6AFB8;} 
+div.widget-inline-hbox label.widget-label {color: #A6AFB8;} 
+
+a {color: #5ea6ea;}
+
+/* cmr INTRO PAGE */
+.toolbar_info, .list_container {color: #E8E9ED;}
+
+/* cmr NOTEBOOK */
+
+/* comment out this line to bring the toolbar back */
+/*
+div#maintoolbar, div#header {display: none !important;}
+*/
+
+div#notebook {border-top: none;}
+
+div.input_prompt {color: #D73C9A;}
+div.output_prompt {color: #A363D5;}
+div.input_area {
+  border-radius: 0px;
+  border: 1px solid #586875;
+}
+div.output_area pre {font-weight: normal; color: #A6AFB8;}
+div.output_subarea {font-weight: normal; color: #A6AFB8;}
+
+.rendered_html table, .rendered_html th, .rendered_html tr, .rendered_html td {
+  border: 1px  #A6AFB8 solid;
+  color: #A6AFB8;
+}
+
+div.output_html { font-family: sans-serif; }
+table.dataframe tr {border: 1px #A6AFB8;}
+
+div.cell.selected {border-radius: 0px;}
+div.cell.edit_mode {border-radius: 0px; border: thin solid #A363D5;}
+div.text_cell_render, div.output_html {color: #A6AFB8;}
+
+/*
+END CMR
+*/
+
+
+
+/*
+     GLOBALS
+*/
+
+span.ansiblack {color: #222E38;}
+span.ansiblue {color: #33B5E1;}
+span.ansigray {color: #85939E;}
+span.ansigreen {color: #7CC844;}
+span.ansipurple {color: #A363D5;}
+span.ansired {color: #EF5253;}
+span.ansiyellow {color: #E4B51C;}
+
+div.output_stderr {background-color: #18262F;}
+div.output_stderr pre {color: #E8E9ED;}
+
+.cm-s-ipython.CodeMirror {background: #18262F; color: #E8E9ED;}
+.cm-s-ipython div.CodeMirror-selected {background: #222E38 !important;}
+.cm-s-ipython .CodeMirror-gutters {background: #222E38; border-right: 0px;}
+.cm-s-ipython .CodeMirror-linenumber {color: #667581;}
+.cm-s-ipython .CodeMirror-cursor {border-left: 1px solid #85939E !important;}
+
+.cm-s-ipython span.cm-comment {color: #667581;}
+.cm-s-ipython span.cm-atom {color: #A363D5;}
+.cm-s-ipython span.cm-number {color: #E66B2B;}
+
+.cm-s-ipython span.cm-property, .cm-s-ipython span.cm-attribute {color: #EF5253;}
+.cm-s-ipython span.cm-keyword {color: #A363D5;}
+.cm-s-ipython span.cm-string {color: #7CC844;}
+.cm-s-ipython span.cm-operator {color: #F5F7FA;}
+.cm-s-ipython span.cm-builtin {color: #33B5E1;}
+
+.cm-s-ipython span.cm-variable {color: #E8E9ED;}
+.cm-s-ipython span.cm-variable-2 {color: #33B5E1;}
+.cm-s-ipython span.cm-def {color: #E4B51C;}
+.cm-s-ipython span.cm-error {background: #EF5253; color: #85939E;}
+.cm-s-ipython span.cm-bracket {color: #F5F7FA;}
+.cm-s-ipython span.cm-tag {color: #EF5253;}
+.cm-s-ipython span.cm-link {color: #A363D5;}
+.cm-s-ipython span.cm-meta {color: #EF5253;}
+
+.cm-s-ipython .CodeMirror-matchingbracket { text-decoration: underline; color: #E8E9ED !important;}
+
+
+
+/*
+===============================================================
+*/
+
+pre { color:#7CC844 }
+
+.highlight .hll { background-color: #18262F }
+.highlight  { background: #18262F; color: # }
+
+.highlight .c  { color: #667581 } /* Comment */
+.highlight .cm { color: #667581 } /* Comment.Multiline */
+.highlight .cp { color: #667581 } /* Comment.Preproc */
+.highlight .c1 { color: #667581 } /* Comment.Single */
+.highlight .cs { color: #667581 } /* Comment.Special */
+
+.highlight .err { color: #85939E; background-color: #EF5253 } /* Error */
+.highlight .k  { color: #A363D5 } /* Keyword */
+.highlight .p  { color: #E8E9ED } /* Punctuation */
+.highlight .gd { color: #E8E9ED } /* @ Generic.Deleted */
+.highlight .gi { color: #E8E9ED } /* @ Generic.Inserted */
+
+.highlight .ge { font-style: italic } /* Generic.Emph */
+.highlight .gs { font-weight: bold } /* Generic.Strong */
+
+.highlight .gu { color: #E8E9ED } /* @ Generic.Subheading */
+.highlight .kc { color: #E8E9ED } /* Keyword.Constant */
+.highlight .kd { color: #E8E9ED } /* Keyword.Declaration */
+.highlight .kn { color: #E8E9ED } /* Keyword.Namespace */
+.highlight .kp { color: #E8E9ED } /* Keyword.Pseudo */
+.highlight .kr { color: #E8E9ED } /* Keyword.Reserved */
+.highlight .kt { color: #E8E9ED } /* Keyword.Type */
+
+.highlight .ld { color: #7CC844 } /* Literal.Date */
+.highlight .l  { color: #7CC844 } /* Literal */
+.highlight .o  { color: #F5F7FA; font-weight: bold; } /* Operator */
+
+.highlight .m  { color: #E66B2B } /* Literal.Number */
+.highlight .mb { color: #E66B2B } /* Literal.Number.Bin */
+.highlight .mf { color: #E66B2B } /* Literal.Number.Float */
+.highlight .mh { color: #E66B2B } /* Literal.Number.Hex */
+.highlight .mi { color: #E66B2B } /* Literal.Number.Integer */
+.highlight .mo { color: #E66B2B } /* Literal.Number.Oct */
+
+.highlight .s  { color: #7CC844 } /* Literal.String */
+.highlight .sb { color: #7CC844 } /* Literal.String.Backtick */
+.highlight .sc { color: #7CC844 } /* Literal.String.Char */
+.highlight .sd { color: #7CC844 } /* Literal.String.Doc */
+.highlight .s2 { color: #7CC844 } /* Literal.String.Double */
+.highlight .se { color: #7CC844 } /* Literal.String.Escape */
+.highlight .sh { color: #7CC844 } /* Literal.String.Heredoc */
+.highlight .si { color: #7CC844 } /* Literal.String.Interpol */
+.highlight .sx { color: #7CC844 } /* Literal.String.Other */
+.highlight .sr { color: #7CC844 } /* Literal.String.Regex */
+.highlight .s1 { color: #7CC844 } /* Literal.String.Single */
+.highlight .ss { color: #7CC844 } /* Literal.String.Symbol */
+
+
+.highlight .n  { color: #E8E9ED } /* Name */
+.highlight .na { color: #E8E9ED } /* Name.Attribute */
+.highlight .nb { color: #E8E9ED } /* Name.Builtin */
+.highlight .nc { color: #E8E9ED } /* Name.Class */
+.highlight .no { color: #E8E9ED } /* @ Name.Constant */
+.highlight .nd { color: #E8E9ED } /* Name.Decorator */
+.highlight .ne { color: #E8E9ED } /* Name.Exception */
+.highlight .nf { color: #E8E9ED } /* Name.Function */
+.highlight .nn { color: #E8E9ED } /* Name.Namespace */
+.highlight .nx { color: #E8E9ED } /* @ Name.Other */
+
+.highlight .py { color: #EF5253 } /* @ Name.Property */
+.highlight .nt { color: #EF5253 } /* @ Name.Tag */
+.highlight .ni { color: #EF5253 } /* @ Name.Entity */
+.highlight .nl { color: #EF5253 } /* @ Name.Label */
+.highlight .nv { color: #EF5253 } /* @ Name.Variable */
+.highlight .w  { color: #EF5253 } /* @ Text.Whitespace */
+
+.highlight .ow { color: #33B5E1 } /* Operator.Word */
+.highlight .bp { color: #33B5E1 } /* Name.Builtin.Pseudo */
+.highlight .vc { color: #33B5E1 } /* Name.Variable.Class */
+.highlight .vg { color: #33B5E1 } /* Name.Variable.Global */
+.highlight .vi { color: #33B5E1 } /* Name.Variable.Instance */
+.highlight .il { color: #33B5E1 } /* Literal.Number.Integer.Long */
