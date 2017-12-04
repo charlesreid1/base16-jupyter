@@ -32,6 +32,7 @@ These are included in the repo by default, but can be
 rebuilt from the template (if templates are modified) via:
 
 ```
+pip install pystache
 python build.py
 ```
 
