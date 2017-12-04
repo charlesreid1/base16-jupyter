@@ -10,7 +10,13 @@ using Chris Kempson's Base16 color scheme generator
 
 see [TODO.md](/TODO.md)
 
+----
+
+**Monokai theme:**
+
 <img src="/img/Monokai.png" width="300px" alt="Monokai" />
+
+
 
 ## How It Works
 
