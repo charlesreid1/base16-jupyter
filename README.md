@@ -16,65 +16,76 @@ see [TODO.md](/TODO.md)
 
 <img src="/img/Monokai.png" width="300px" alt="Monokai" />
 
+## Quick Start
+
+### Installing Prereqs
+
+Templates for building CSS files requires Mustache templates,
+which requires `pystache`:
+
+```
+pip install pystache
+```
+
+### Use Existing Jupyter Style Configurations
+
+The main point of the repo is to give you 
+a Jupyter notebook custom configuration 
+directory with custom CSS to apply base16
+color themes.
+
+These are already built and ready to go 
+in the `configs` directory.
+
+To run juyter notebook specifying a custom theme,
+edit `$JUPYTER_CONFIG_DIR` before running the 
+jupyter command:
+
+```
+JUPYTER_CONFIG_DIR=configs/bespin jupyter notebook
+```
+
+If you want to convert a notebook to HTML 
+for including it with web content, you can
+specify this directory before invoking 
+nbconvert:
+
+```
+JUPYTER_CONFIG_DIR=configs/bespin jupyter nbconvert --to html mynotebook.ipynb
+```
+
+### Building Jupyter Style Configurations
+
+**Don't edit the .css files directly.**
+
+The CSS files are automatically created from
+the templates in `templates/`.
+
+To remake the CSS style files and the Jupyter 
+custom config directories:
+
+```
+python build.py
+```
+
+This should be done if you have a new 
+color scheme, or if you modify the 
+template files.
+
+
 
 
 ## How It Works
 
-This uses a template CSS file in templates (default.mustache) that is 
-marked with Mustache template variables representing colors for 
-different color schemes.
+This will use the CSS Mustache templates in `templates/` 
+to generate CSS files in `colors/` for each theme.
 
-The Python build script creates a temporary folder, gets a list of repos 
-containing color schemes (in .yml format), and applies them to the template.
-The output winds up in `colors/` in the form of ready-to-go CSS files.
+It initializes a Jupyter configuration directory for each theem,
+then copies the theme CSS files into the Jupyter config directory.
 
-Once you decide on a color template, you copy the CSS file to the Jupyter
-configuration directory.
+(The list of themes comes from a repo, listed in a .yml file.)
 
-## Using 
 
-### Build CSS Files
-
-To start out, you will want the CSS style files.
-These are included in the repo by default, but can be 
-rebuilt from the template (if templates are modified) via:
-
-```
-pip install pystache
-python build.py
-```
-
-This will use the Mustache templates in `templates/` 
-to generate CSS files in `colors/`.
-
-### Using as default Jupyter configuration
-
-To use this CSS style as the default Jupyter notebook configuration,
-start by creating a custom configuration directory:
-
-```
-$ jupyter notebook --generate-config
-```
-
-Next, you will want to install the CSS file to `$HOME/.jupyter/custom/custom.css`.
-
-This is the way `install_jupyter.sh` currently installs the Jupyter theme,
-so to install the theme as the Jupyter notebook default:
-
-```
-$ ./install_jupyter
-```
-
-By default this installs the "bespin" theme. Adjust `install_jupyster.sh` as needed.
-
-### Using as custom Jupyter configuration
-
-To install the CSS style as a custom Jupyter notebook configuration
-that is only used if specified, the `$JUPYTER_CONFIG` variable
-should be set.
-
-Change `$CONFIG_DIR` in `install_jupyter.sh` to change 
-configuration directory.
 
 
 # Notes
