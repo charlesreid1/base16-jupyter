@@ -3,6 +3,7 @@
 import io
 import os
 import subprocess
+from subprocess import Popen
 import tempfile
 import glob
 import urllib.request
@@ -34,13 +35,18 @@ with urllib.request.urlopen('https://gist.githubusercontent.com/charlesreid1/c71
     file = io.TextIOWrapper(fileb)
     repos = yaml.safe_load(file)
 
+scheme_names = []
+file_names = []
+
 with tempfile.TemporaryDirectory() as tempdir:
+    # repos listed in yaml at url above
     for repo, url in repos.items():
         subprocess.run(
             ['git', 'clone', '--depth=1', url, repo],
             cwd=tempdir,
             check=True)
     for schemepath in glob.iglob(os.path.join(tempdir, '**', '*.yaml')):
+        # for each repo listed in the yaml file
         with open(schemepath) as schemefile:
             scheme = yaml.safe_load(schemefile)
         context = make_context(scheme)
@@ -49,9 +55,59 @@ with tempfile.TemporaryDirectory() as tempdir:
                 outdir,
                 'base16-' + os.path.basename(schemepath[:-5]) + extension
             )
+            scheme_names.append( os.path.basename(schemepath[:-5]) )
             print('render', filename)
             with open(filename, 'w') as file:
                 file.write(
                     pystache.render(parsed, context)
                 )
+            file_names.append(filename)
+
+# Now build a jupyter config dir 
+# for each color scheme
+import subprocess
+
+print(file_names)
+
+for scheme_name in scheme_names:
+
+    # Make the custom config dir
+    config_dir = 'configs/'+scheme_name
+    custom_dir = config_dir+'/custom'
+
+    print("about to make custom config dir for %s"%(scheme_name))
+
+    subprocess.call(['mkdir','-p',config_dir])
+
+    print("finished making custom config dir for %s"%(scheme_name))
+
+
+    print("about to jupyter custom config generate config for %s at: %s"%(scheme_name, config_dir))
+
+    # Generate config dir
+    Popen(["jupyter notebook --generate-config -y"], shell=True, env={"JUPYTER_CONFIG_DIR": config_dir})
+
+    print("finished jupyter generating config dir for %s at: %s"%(scheme_name, config_dir))
+
+
+    # Make sure custom css has somewhere to go
+    subprocess.call(['mkdir','-p',custom_dir])
+
+    # Install css style
+    subprocess.call(['cp','/Users/charles/codes/base16/base16-jupyter/colors/base16-'+scheme_name+'.css',custom_dir+'/custom.css'])
+
+    print("finished installing css style at %s"%( custom_dir+'/custom.css'))
+
+
+
+    ### ## Start a notebook
+    ### #subprocess.call(['JUPYTER_CONFIG_DIR='+config_dir,'jupyter','notebook'])
+
+    ### # Convert notebook to html
+    ### # using custom configuration
+    ### # jupyter nbconvert --to html mynotebook.ipynb
+    ### notebook_loc = '/Users/charles/codes/base16/base16-jupyter/notebooks/'+scheme_name+'.ipynb'
+    ### subprocess.call(['JUPYTER_CONFIG_DIR=/Users/charles/codes/base16/base16-jupyter/'+config_dir,'jupyter','nbconvert','--to-html',notebook_loc])
+
+
 
