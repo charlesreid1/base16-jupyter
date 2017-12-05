@@ -2,6 +2,21 @@ import glob
 import os
 from os.path import basename
 
+# 3024
+# bespin
+# brewer
+# chalk
+# flat
+# grreyscale
+# greenscreen
+# isotope
+# marrakesh
+# monokai
+# paraiso
+# pop
+# railscasts
+# solarized (dark-light-none)
+
 
 
 # # mplrc themes available:
