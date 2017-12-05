@@ -8,13 +8,13 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>Portfolio Item - Start Bootstrap Template</title>
+    <title>Base16-Jupyter</title>
 
     <!-- Bootstrap core CSS -->
     <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
 
     <!-- Custom styles for this template -->
-    <link href="css/portfolio-item.css" rel="stylesheet">
+    <link href="css/2-col-portfolio.css" rel="stylesheet">
 
   </head>
 
@@ -23,7 +23,7 @@
     <!-- Navigation -->
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
       <div class="container">
-        <a class="navbar-brand" href="#">Start Bootstrap</a>
+        <a class="navbar-brand" href="#">base16-jupyter</a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
           <span class="navbar-toggler-icon"></span>
         </button>
@@ -37,12 +37,6 @@
             <li class="nav-item">
               <a class="nav-link" href="#">About</a>
             </li>
-            <li class="nav-item">
-              <a class="nav-link" href="#">Services</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="#">Contact</a>
-            </li>
           </ul>
         </div>
       </div>
@@ -51,64 +45,111 @@
     <!-- Page Content -->
     <div class="container">
 
-      <!-- Portfolio Item Heading -->
-      <h1 class="my-4">Page Heading
-        <small>Secondary Text</small>
+      <!-- Page Heading -->
+      <h1 class="my-4">Base16-Jupyter
+        <small>Notebook Gallery</small>
       </h1>
 
-      <!-- Portfolio Item Row -->
       <div class="row">
-
-        <div class="col-md-8">
-          <img class="img-fluid" src="http://placehold.it/750x500" alt="">
+        <div class="col-lg-6 portfolio-item">
+          <div class="card h-100">
+            <a href="/bespin.html"><img class="card-img-top" src="/img/bespin.png" width="700px" alt=""></a>
+            <div class="card-body">
+              <h4 class="card-title">
+                <a href="/bespin.html">bespin</a>
+              </h4>
+              <p class="card-text">
+              bespin is a dark brown color scheme.
+              </p>
+            </div>
+          </div>
         </div>
 
-        <div class="col-md-4">
-          <h3 class="my-3">Project Description</h3>
-          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam viverra euismod odio, gravida pellentesque urna varius vitae. Sed dui lorem, adipiscing in adipiscing et, interdum nec metus. Mauris ultricies, justo eu convallis placerat, felis enim.</p>
-          <h3 class="my-3">Project Details</h3>
-          <ul>
-            <li>Lorem Ipsum</li>
-            <li>Dolor Sit Amet</li>
-            <li>Consectetur</li>
-            <li>Adipiscing Elit</li>
-          </ul>
+
+        <div class="col-lg-6 portfolio-item">
+          <div class="card h-100">
+            <a href="/monokai.html"><img class="card-img-top" src="/img/monokai.png" width="700px" alt=""></a>
+            <div class="card-body">
+              <h4 class="card-title">
+                <a href="/monokai.html">monokai</a>
+              </h4>
+              <p class="card-text">
+              monokai is a light-neon-on-dark theme that resembles Sublime Text. 
+              </p>
+            </div>
+          </div>
         </div>
+
+
+        <div class="col-lg-6 portfolio-item">
+          <div class="card h-100">
+            <a href="/isotope.html"><img class="card-img-top" src="/img/isotope.png" width="700px" alt=""></a>
+            <div class="card-body">
+              <h4 class="card-title">
+                <a href="/isotope.html">isotope</a>
+              </h4>
+              <p class="card-text">
+              isotope is a dark neon color scheme.
+              </p>
+            </div>
+          </div>
+        </div>
+
+
+        <div class="col-lg-6 portfolio-item">
+          <div class="card h-100">
+            <a href="/chalk.html"><img class="card-img-top" src="/img/chalk.png" width="700px" alt=""></a>
+            <div class="card-body">
+              <h4 class="card-title">
+                <a href="/chalk.html">chalk</a>
+              </h4>
+              <p class="card-text">
+              chalk is a dark gray and pastel color scheme.
+              </p>
+            </div>
+          </div>
+        </div>
+
+
+
+
+
+
+
+
+
+
+
+
 
       </div>
       <!-- /.row -->
 
-      <!-- Related Projects Row -->
-      <h3 class="my-4">Related Projects</h3>
-
-      <div class="row">
-
-        <div class="col-md-3 col-sm-6 mb-4">
-          <a href="#">
-            <img class="img-fluid" src="http://placehold.it/500x300" alt="">
+      <!-- Pagination
+      <ul class="pagination justify-content-center">
+        <li class="page-item">
+          <a class="page-link" href="#" aria-label="Previous">
+            <span aria-hidden="true">&laquo;</span>
+            <span class="sr-only">Previous</span>
           </a>
-        </div>
-
-        <div class="col-md-3 col-sm-6 mb-4">
-          <a href="#">
-            <img class="img-fluid" src="http://placehold.it/500x300" alt="">
+        </li>
+        <li class="page-item">
+          <a class="page-link" href="#">1</a>
+        </li>
+        <li class="page-item">
+          <a class="page-link" href="#">2</a>
+        </li>
+        <li class="page-item">
+          <a class="page-link" href="#">3</a>
+        </li>
+        <li class="page-item">
+          <a class="page-link" href="#" aria-label="Next">
+            <span aria-hidden="true">&raquo;</span>
+            <span class="sr-only">Next</span>
           </a>
-        </div>
-
-        <div class="col-md-3 col-sm-6 mb-4">
-          <a href="#">
-            <img class="img-fluid" src="http://placehold.it/500x300" alt="">
-          </a>
-        </div>
-
-        <div class="col-md-3 col-sm-6 mb-4">
-          <a href="#">
-            <img class="img-fluid" src="http://placehold.it/500x300" alt="">
-          </a>
-        </div>
-
-      </div>
-      <!-- /.row -->
+        </li>
+      </ul>
+      -->
 
     </div>
     <!-- /.container -->
