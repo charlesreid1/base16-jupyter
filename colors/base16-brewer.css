@@ -138,13 +138,17 @@ div.output_stderr pre {color: #dadbdc;}
 
 .cm-s-ipython .CodeMirror-matchingbracket { text-decoration: underline; color: #dadbdc !important;}
 
+div.CodeMirror {color: #dadbdc;}
 
+.CodeMirror .cm-s-default {color: #dadbdc;}
+/*.cm-header, .cm-header-1 {color: #756bb1;}*/
+.cm-s-default .cm-header {color: #756bb1;}
 
 /*
 ===============================================================
 */
 
-pre { color:#31a354 }
+.CodeMirror pre { color:#dadbdc }
 
 .highlight .hll { background-color: #0c0d0e }
 .highlight  { background: #0c0d0e; color: # }
