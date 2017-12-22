@@ -8,12 +8,10 @@ import glob
 import urllib.request
 import pystache, yaml
 import json
-
-# ------------- 
-# mplrc:
 import re
 from IPython.core.magic import Magics, magics_class, line_magic
 from IPython.core.magic_arguments import (argument, magic_arguments, parse_argstring)
+
 
 
 BASE16_SCHEMES_LIST = 'https://gist.githubusercontent.com/charlesreid1/c7137432a73c7d4dfafc4fa240a67e44/raw/f3676474918879f036609dc6546792930f60d3bb/list.yaml'
@@ -32,26 +30,31 @@ build.py:
 
         python build.py [command]
 
-    all command:
-    - css files
-    - jupyter config
-    - nbconvert
+    List of commands:
 
-    notebooks command:
-    - jupyter nbconvert with configs 
-
-    pyplot command:
-    - installs ipython notebook magic to load scheme
-    - loading scheme installs pyplot color scheme
-
-    jupyter command:
-    - python build.py jupyter
-    - makes css colors
-    - makes/installs Jupyter config directories
+        python build.py css
+        python build.py jupyter
+        python build.py pyplot
+        python build.py notebooks
+        python build.py all
 
     css command:
-    - python build.py css
-    - makes css colors
+    * Turns CSS templates into CSS output files
+
+    jupyter command:
+    * Turns CSS templates into Jupyter custom config directories
+
+    pyplot command:
+    * Installs IPython magic to load pyplot color schemes
+
+    notebooks:
+    * jupyter nbconvert with configs 
+
+    all:
+    * Turns CSS tmplates into CSS output files
+    * Creates Jupyter config directory for each scheme
+    * Installs IPython magic to load pyplot color schemes
+    * Runs nbconvert to create example notebooks
 """
 
 def usage():
@@ -70,19 +73,34 @@ def usage():
 
 
 def css_info(templates_dir):
+    ran("css")
     print("CSS files have been built from templates in %s"%(templates_dir))
     print("files: config.yaml, default.mustache")
 
 
 def jupyter_info(templates_dir):
+    ran("jupyter")
     print("jupyter config files have been built from templates %s"%(templates_dir))
     print("files: config.yaml, default.mustache, configs/")
 
 
+def pyplot_info(templates_dir):
+    ran("pyplot")
+    print("Normally, we would do some pyplot stuff here.")
+    print("However, we have no idea what we are doing.")
+
+
 def notebooks_info(templates_dir, notebooks_dir, deploy_dir):
+    ran("notebooks")
     print("jupyter config files have been built from templates %s"%(templates_dir))
     print("built from notebooks in %s"%(notebooks_dir))
     print("converted to html in %s"%(deploy_dir))
+
+
+def ran(cmd):
+    print("\nYou ran the command:\n\n")
+    print("\t python build.py %s"%(cmd))
+    print("\n")
 
 
 def get_config(config_file):
@@ -226,6 +244,27 @@ def build_jupyter_config_directories(templates_dir, schemes_url, config_dir='con
         # Done installing CSS style into Jupyter config.
 
     return file_names, scheme_names
+
+
+def do_pyplot_stuff():
+    """
+    Install IPython notebook magic to load up
+    matplotlib/pyplot color schemes. 
+
+    The color schemes live in ~/.jupyter (?)
+
+    The color schemes are built using (?)
+
+    See ../cmr-base16-ipython-matplotlib
+
+
+
+    Input arguments?
+    * templates dir
+    * schemes url
+    * config dir
+    """
+    pass
 
 
 def get_notebook_schemes(notebooks_dir):
@@ -544,7 +583,7 @@ def main():
 
     if(task=='css'):
         print("About to build CSS files")
-        ## Build CSS files for schemes
+        # Build CSS files for schemes
         f, s = clone_from_config(templates_dir, schemes)
         css_info(templates_dir)
 
@@ -557,7 +596,7 @@ def main():
     elif(task=='pyplot'):
         print("About to install nb magic and pyplot color schemes")
         # notebook magic and pyplot
-        #do_matplotlib_stuff()
+        pyplot_info(templates_dir)
 
     elif(task=='notebooks'):
         print("About to convert Jupyter notebooks to HTML")
