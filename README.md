@@ -1,6 +1,6 @@
 # base16-jupyter
 
-A fork of [base16-ipython](#) and [base16-ipython-matplotlibrc](#).
+A fork of [base16-ipython](#) and [base16-ipython-pyplot](#).
 
 Uses C Kempson's Base 16 color scheme framework.
 
@@ -12,12 +12,12 @@ Uses C Kempson's Base 16 color scheme framework.
 
 * For the lazy: get started using existing color schemes
     * Using Jupyter notebook color schemes
-    * Using Matplotlib color schemes from Jupyter
+    * Using Pyplot color schemes from Jupyter
 
 * For the ambitious: how to modify base16-jupyter?
     * Installing dependencies
     * Building custom Jupyter CSS
-    * Matplotlib configuration
+    * Pyplot configuration
 
 * For the overachiever: how to make own color schemes?
 
@@ -30,12 +30,12 @@ Uses C Kempson's Base 16 color scheme framework.
 ## Well... What The Hell Is It?
 
 This repository gives you some cool dark/light color schemes 
-for Jupyter notebooks, plus associated matplotlib plot styles.
+for Jupyter notebooks, plus associated pyplot plot styles.
 
 How does it work? To run Jupyter with custom CSS, you can just
 point Jupyter to a custom configuration directory when you run it.
 
-To use custom matplotlib colors, you have to install
+To use custom pyplot colors, you have to install
 a notebook extension first.
 
 
@@ -43,8 +43,8 @@ a notebook extension first.
 ## For The Lazy: How Do I Get Started Using Existing Color Schemes?
 
 The main point of this repo is not just to give you the tools you need
-to make your own Jupyter/Matplotlib color schemes, but to provide 
-a usable bundle of Jupyter and matplotlib config files, so you can
+to make your own Jupyter/pyplot color schemes, but to provide 
+a usable bundle of Jupyter and pyplot config files, so you can
 use this package right out of the box.
 
 ### Using Jupyter Notebook Color Schemes
@@ -73,7 +73,7 @@ nbconvert:
 JUPYTER_CONFIG_DIR=configs/bespin jupyter nbconvert --to html mynotebook.ipynb
 ```
 
-### Using Matplotlib Color Schemes From Jupyter
+### Using Pyplot Color Schemes From Jupyter
 
 TODO
 
@@ -90,7 +90,7 @@ which requires `pystache`:
 pip install pystache
 ```
 
-### Building Custom Jupyter CSS
+### Building Custom CSS
 
 The base16-jupyter package uses CSS to apply style files to Jupyter notebooks.
 
@@ -104,7 +104,7 @@ the CSS style files and custom Jupyter config directories,
 via the command:
 
 ```
-python build.py css
+python3 build.py css
 ```
 
 (Run this command from the base16-jupyter repository.)
@@ -113,19 +113,43 @@ This should be done if you have added a new color scheme to
 the list of color schemes being built, or if you have 
 modified the template files. 
 
+### Building Custom Jupyter Config
 
-### Matplotlib Configuration
+To re-build the CSS files and the Jupyter custom configuration directories
+(which bundle the CSS, Javascript, and JSON configuration files for the 
+Jupyter scheme), use the command:
+
+```
+python3 build.py jupyter
+```
+
+This will build all of the CSS, then build all of the 
+Juypter custom configuration directories.
+
+### Pyplot Configuration
 
 TODO - modifying details? where are they? how copied?
 
+The color schemes are installed to matplotlib's pyplot via "mplrc" files 
+(matplotlib starutp files). These contain specifications of 
+which colors from the scheme should be used for which components
+of a pyplot graph.
+
+To install the pyplot
+
+```
+python3 build.py pyplot
+```
 
 
 
 
 ## For The Overachiever: How Do I Make My Own Schemes for base16-jupyter? 
 
-The list of color schemes actually built into Jupyter configurations
-and Matplotlib styles is defined in a .yaml file.
+The list of color schemes that are actually turned into 
+Jupyter configuration directories and pyplot styles 
+is obtained from a .yaml file.
+
 The .yaml file is itself a list of Github repositories,
 each containing the files for a particular color scheme.
 
@@ -139,6 +163,9 @@ outside the scope of this document.
 
 --------------------------------------------------------
 
+
+
+X X X X X X X X X X X X
 
 
 
