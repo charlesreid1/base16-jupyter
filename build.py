@@ -9,6 +9,17 @@ import urllib.request
 import pystache, yaml
 import json
 
+# ------------- 
+# mplrc:
+import re
+from IPython.core.magic import Magics, magics_class, line_magic
+from IPython.core.magic_arguments import (argument, magic_arguments, parse_argstring)
+
+
+BASE16_SCHEMES_LIST = 'https://gist.githubusercontent.com/charlesreid1/c7137432a73c7d4dfafc4fa240a67e44/raw/f3676474918879f036609dc6546792930f60d3bb/list.yaml'
+
+
+
 """
 build.py:
 
@@ -29,6 +40,10 @@ build.py:
     notebooks command:
     - jupyter nbconvert with configs 
 
+    pyplot command:
+    - installs ipython notebook magic to load scheme
+    - loading scheme installs pyplot color scheme
+
     jupyter command:
     - python build.py jupyter
     - makes css colors
@@ -48,6 +63,7 @@ def usage():
         commands:
             css
             jupyter
+            pyplot
             notebooks
             all
     """)
@@ -173,7 +189,7 @@ def clone_from_config(templates_dir, schemes_url):
     return file_names, scheme_names
 
 
-def build_jupyter_config_directories(templates_dir, schemes_url):
+def build_jupyter_config_directories(templates_dir, schemes_url, config_dir='configs'):
     """Initializes and builds Jupyter configuration directories
     for each color scheme.
     """
@@ -184,19 +200,22 @@ def build_jupyter_config_directories(templates_dir, schemes_url):
     # Now build a jupyter config dir for each color scheme
     import subprocess
 
+    # Should validate this first.
+    subprocess.call(['mkdir','-p',config_dir])
+
     for scheme_name in scheme_names:
     
         # Make the custom config dir
-        config_dir = 'configs/'+scheme_name
-        custom_dir = config_dir+'/custom'
+        config_dir_full = config_dir+'/'+scheme_name
+        custom_dir = config_dir_full+'/custom'
 
         # About to make custom config dir for scheme
-        subprocess.call(['mkdir','-p',config_dir])
+        subprocess.call(['mkdir','-p',config_dir_full])
         # Done making custom config dir for scheme
 
         # Generate config dir
         Popen(["jupyter notebook --generate-config -y"], 
-                shell=True, env={"JUPYTER_CONFIG_DIR": config_dir})
+                shell=True, env={"JUPYTER_CONFIG_DIR": config_dir_full})
         # Done generating custom Jupyter config for scheme
 
         # Make sure custom css has somewhere to go
@@ -224,38 +243,52 @@ def get_notebook_schemes(notebooks_dir):
     return schemes
 
 
-def convert_notebooks_to_html(config_dir, notebooks_dir, deploy_dir, deploy=True):
+def convert_notebooks_to_html(templates_dir, schemes_url, config_dir, 
+                              notebooks_dir, deploy_dir, deploy=True):
+
     """Convert notebooks to html using custom configurations,
     and optionally (b/c nbconvert is asynchronous)
     copy to deployment directory to be checked into the
     gh-pages branch.
+
+    config_dir should be destination for jupyter configuration files:
+        configs/
+
+    notebooks_dir should be where notebooks are located, by default:
+        notebooks/
+
+    deploy_dir should be where the gh-pages branch is deployed, by default:
+        site/htdocs
+
     """
     from subprocess import Popen
 
-    build_jupyter_config_directories(config_file)
+    # Start by building the Jupyter notebook configuration files to config
+    file_names, scheme_names = build_jupyter_config_directories(templates_dir, schemes_url, config_dir)
 
-    for scheme in get_notebook_schemes():
+    #for scheme_name in scheme_names:
+    for scheme_name in get_notebook_schemes():
     
-        config_dir = 'configs/'+scheme
+        config_dir_full = config_dir + '/' + scheme_name
 
         # verify notebooks_dir is a path homie
         nbcmd = "jupyter nbconvert --to html"
-        nbcmd += " %s/%s.ipynb"%(notebooks_dir, scheme)
+        nbcmd += " %s/%s.ipynb"%(notebooks_dir, scheme_name)
 
         mvcmd = "mv"
-        mvcmd += " %s/%s.html %s/%s.html"%(notebooks_dir, scheme, deploy_dir, scheme)
+        mvcmd += " %s/%s.html %s/%s.html"%(notebooks_dir, scheme_name, deploy_dir, scheme_name)
         
         combined_cmd = nbcmd + " && " + mvcmd
 
         if(deploy):
             # Convert notebook to html and copy to deploy dir
             Popen([combined_cmd],shell=True,
-                env={"JUPYTER_CONFIG_DIR": config_dir})
+                env={"JUPYTER_CONFIG_DIR": config_dir_full})
     
         else:
             # Convert notebook to html only
             Popen([nbcmd],shell=True,
-                env={"JUPYTER_CONFIG_DIR": config_dir})
+                env={"JUPYTER_CONFIG_DIR": config_dir_full})
     
 
 
@@ -270,11 +303,222 @@ def convert_notebooks_to_html(config_dir, notebooks_dir, deploy_dir, deploy=True
     ### subprocess.call(['JUPYTER_CONFIG_DIR=/Users/charles/codes/base16/base16-jupyter/'+config_dir,'jupyter','nbconvert','--to-html',notebook_loc])
 
 
+
+
+
+def do_matplotlib_stuff(templates_dir, schemes_url):
+    """Theme the inline backend of matplotlib using base16 schemes.
+    Inline magic will look like this:
+
+    %base16-mplrc <theme>
+
+    The extension defines magic configuring 
+    InlineBackend.rc to match active base16
+    custom.css file, if present.
+    """
+    # Start by building the Jupyter notebook configuration files to config
+    build_jupyter_config_directories(config_file)
+
+
+    #
+    # how should this be handled?
+    # install all themes?
+    # then when config passed, loads the theme too?
+    # still specify magic in notebook?
+    #
+    # in spirit of original, 
+    # keep notebook markup,
+    # to mix and match styles.
+    #
+    # install all themes, user specifies 
+    # using notebook magic.
+
+
+    # TODO: fix scope
+    @magics_class
+    class MPLRCMagics(Magics):
+        def __init__(self,shell): 
+            super(MPLRCMagics,self).__init__(shell)
+    
+        # Decorators make this magic accept arguments
+        @line_magic
+        @magic_arguments()
+        @argument('theme', nargs='?', default=None, help='base16 theme')
+        def base16_mplrc(self,args):
+            """base16_mplrc defines magic invoked with %base16_mplrc.
+
+                args:
+                    theme : base16 theme to use
+            """
+            # Parse the magic arguments
+            # https://ipython.readthedocs.io/en/stable/api/generated/IPython.core.magic_arguments.html
+            args = parse_argstring(self.base16_mplrc, args)
+            theme = args.theme
+
+            # Detect the base16 ipython notebook theme, 
+            # setup the matplotlib rc
+            css_theme = None
+            custom_css_fname = self.shell.profile_dir.location+'/custom/custom.css'
+            if os.path.exists(custom_css_fname):
+                with open(custom_css_fname) as css_file:
+                    for line in css_file:
+                        if(re.match('^\s*Name: ',line)):
+                            css_theme = line.split()[2].lower()
+    
+            # Fall back on sensible defaults
+            if theme is None:
+                theme = css_theme
+            if theme is None:
+                print('''
+                         Could not detect base-16 ipython notebook theme. Download base16 theme notebook theme
+                         from https://github.com/nsonnad/base16-ipython-notebook . Using \'default\' theme.''')
+                theme='default'
+    
+            # TODO: fixme
+            #### old:
+            ###jsondir = '/Users/charles/codes/base16/base16-jupyter/mpljson'
+            # new:
+            jsondir = 'mpljson'
+            avail_themes = [os.path.split(f)[-1].split('.')[0] for f in glob.glob(jsondir + '/*.json')]
+            #validate input
+            if theme not in avail_themes:
+                print("theme must be present in base16-mplrc-themes dir, defaulting to 'default'")
+                print("Available themes:")
+                for t in avail_themes:
+                    print("\t{}".format(t))
+                theme = 'default'
+    
+            print("Setting plotting theme to {}. Palette available in b16_colors".format(theme))
+    
+            theme_colors = json.load(open(jsondir+'/'+theme+'.json'))
+    
+            #snag the matplotlibrc configuration from the ipython config
+            #### old IPython:
+            ###from IPython.kernel.zmq.pylab.backend_inline import InlineBackend
+            # new ipykernel:
+            from ipykernel.pylab.config import InlineBackend
+
+            cfg = InlineBackend.instance(parent=self.shell)
+            cfg.shell=self.shell
+            if cfg not in self.shell.configurables:
+                self.shell.configurables.append(cfg)
+            if True:
+                 cfg.rc = {'figure.facecolor':theme_colors['base00'],
+                            'savefig.facecolor':theme_colors['base00'],
+                            'text.color':theme_colors['base07'],
+                            'axes.color_cycle':[theme_colors['base{:02X}'.format(i)] for i in [13,8,11,9,12,14,10,15]],
+                            'axes.facecolor': theme_colors['base01'],
+                            'axes.edgecolor': theme_colors['base01'],
+                            'axes.labelcolor': theme_colors['base07'],
+                            'lines.color': theme_colors['base09'],
+                            'lines.markeredgewidth': 0,
+                            'patch.facecolor': theme_colors['base09'],
+                            'patch.edgecolor': theme_colors['base02'],
+                            'xtick.color': theme_colors['base07'],
+                            'ytick.color': theme_colors['base07'],
+                            'grid.color': theme_colors['base02']}
+
+            #If pyplot is already using the InlineBackend, this will force an update to the rcParams
+    
+            from matplotlib import pyplot, cm
+            from matplotlib.colors import ColorConverter, ListedColormap
+            import numpy as np
+    
+            conv = ColorConverter()
+            if pyplot.rcParams['backend'] == 'module://ipykernel.pylab.backend_inline':
+    
+                #push the color pallete into scope for the user
+                full=['red','orange','yellow','green','cyan','blue','magenta','brown']
+                abbr=['r','o','y','g','c','b','m','n']
+                #create a color palette class
+                class Palette(object): pass
+                b16_colors=Palette()
+                for f,a,i in zip(full,abbr,range(8,16)):
+                    setattr(b16_colors,f,conv.to_rgb(theme_colors['base{:02X}'.format(i)]))
+                    setattr(b16_colors,a,conv.to_rgb(theme_colors['base{:02X}'.format(i)]))
+    
+                setattr(b16_colors,'white',conv.to_rgb(theme_colors['base07']))
+                setattr(b16_colors,'w',conv.to_rgb(theme_colors['base07']))
+                setattr(b16_colors,'black',conv.to_rgb(theme_colors['base00']))
+                setattr(b16_colors,'k',conv.to_rgb(theme_colors['base00']))
+    
+                #----------------- Color maps ---------------------#
+                def make_gradient(cols):
+                    N=255
+                    M=int(np.ceil(N/len(cols)))
+                    reds = np.empty((0),dtype=np.float)
+                    blues = np.empty((0),dtype=np.float)
+                    greens = np.empty((0),dtype=np.float)
+                    for c0,c1 in zip(cols[:-1],cols[1:]):
+                        reds = np.concatenate((reds,np.linspace(c0[0],c1[0],M-1)))
+                        greens = np.concatenate((greens,np.linspace(c0[1],c1[1],M-1)))
+                        blues = np.concatenate((blues,np.linspace(c0[2],c1[2],M-1)))
+                    return np.array((reds,greens,blues)).transpose()
+    
+                #Make a "jet" colormap
+                cols =[b16_colors.b,
+                       b16_colors.c,
+                       b16_colors.g,
+                       b16_colors.y,
+                       b16_colors.o,
+                       b16_colors.r]
+                b16_colors.jet = ListedColormap(make_gradient(cols),name='b16_jet')
+                cm.register_cmap('b16_jet',b16_colors.jet)
+    
+                #Make a "grayscale" colormap
+                cols = [conv.to_rgb(theme_colors['base{:02X}'.format(i)]) for i in range(8)]
+                b16_colors.gray = ListedColormap(make_gradient(cols),name='b16_gray')
+                cm.register_cmap('b16_gray',b16_colors.gray)
+    
+                #Make a "blues" colormap
+                cols = [b16_colors.w,b16_colors.c,b16_colors.b]
+                b16_colors.blues = ListedColormap(make_gradient(cols),name='b16_blues')
+                cm.register_cmap('b16_blues',b16_colors.blues)
+    
+                #Make a "greens" colormap
+                cols = [b16_colors.w,b16_colors.c,b16_colors.g]
+                b16_colors.greens = ListedColormap(make_gradient(cols),name='b16_greens')
+                cm.register_cmap('b16_greens',b16_colors.greens)
+    
+                #Make a "oranges" colormap
+                cols = [b16_colors.w,b16_colors.y,b16_colors.o]
+                b16_colors.oranges = ListedColormap(make_gradient(cols),name='b16_oranges')
+                cm.register_cmap('b16_oranges',b16_colors.oranges)
+    
+                #Make a "reds" colormap
+                cols = [b16_colors.w,b16_colors.y,b16_colors.o,b16_colors.r]
+                b16_colors.reds = ListedColormap(make_gradient(cols),name='b16_reds')
+                cm.register_cmap('b16_reds',b16_colors.reds)
+    
+                #Make a "flame" colormap
+                cols = [conv.to_rgb(theme_colors['base{:02X}'.format(i)]) for i in range(0,3,2)]+\
+                       [b16_colors.y,b16_colors.o,b16_colors.r]
+                b16_colors.flame = ListedColormap(make_gradient(cols),name='b16_flame')
+                cm.register_cmap('b16_flame',b16_colors.flame)
+    
+                #Make a "brbg" colormap
+                cols = [b16_colors.n,b16_colors.w,b16_colors.b,b16_colors.g]
+                b16_colors.brbg = ListedColormap(make_gradient(cols),name='b16_brbg')
+                cm.register_cmap('b16_brbg',b16_colors.brbg)
+    
+                self.shell.push({"b16_colors":b16_colors})
+                cfg.rc.update({'image.cmap':'b16_flame'})
+    
+                pyplot.rcParams.update(cfg.rc)
+
+
+def load_ipython_extension(ipython):
+    ipython.register_magics(MPLRCMagics)
+
+
+
 def main():
 
     templates_dir ='templates'
 
-    schemes ='https://gist.githubusercontent.com/charlesreid1/c7137432a73c7d4dfafc4fa240a67e44/raw/f3676474918879f036609dc6546792930f60d3bb/list.yaml'
+    schemes = BASE16_SCHEMES_LIST
+
+    jupyter_config_dir = 'configs'
 
     notebooks_dir = 'notebooks'
 
@@ -288,15 +532,15 @@ def main():
 
     # Parse input:
     if(len(sys.argv)==1):
-        task='all'
+        usage()
+        exit()
 
     elif(len(sys.argv)>2):
         usage()
+        exit()
     
     else:
         task = sys.argv[1]
-
-    print(task)
 
     if(task=='css'):
         print("About to build CSS files")
@@ -307,14 +551,20 @@ def main():
     elif(task=='jupyter'):
         print("About to build Jupyter config directories")
         # Build Jupyter config directories
-        f, s = build_jupyter_config_directories(templates_dir, schemes)
+        f, s = build_jupyter_config_directories(templates_dir, schemes, jupyter_config_dir)
         jupyter_info(templates_dir)
+
+    elif(task=='pyplot'):
+        print("About to install nb magic and pyplot color schemes")
+        # notebook magic and pyplot
+        #do_matplotlib_stuff()
 
     elif(task=='notebooks'):
         print("About to convert Jupyter notebooks to HTML")
-        #convert_notebooks_to_html(templates_dir, notebooks_dir, deploy_dir, 
-        #        deploy=True)
-        notebooks_info(templates_dir, notebooks_dir, deploy_dir)
+        convert_notebooks_to_html(templates_dir, schemes, jupyter_config_dir, 
+                notebooks_dir, deploy_dir, 
+                deploy=True)
+        notebooks_info(templates_dir, schemes, notebooks_dir, deploy_dir)
 
     elif(task=='all'):
         print("About to perform all tasks")

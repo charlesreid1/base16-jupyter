@@ -1,41 +1,60 @@
 # base16-jupyter
 
-forked from [base16-ipython](#)
+A fork of [base16-ipython](#) and [base16-ipython-matplotlibrc](#).
 
-Custom style sheets for Jupyter Notebook 
+Uses C Kempson's Base 16 color scheme framework.
 
-using Chris Kempson's Base16 color scheme generator
 
-## Screenshots
 
-see [TODO.md](/TODO.md)
+## Table of Contents
 
-----
+* What is it?
 
-**Monokai theme:**
+* For the lazy: get started using existing color schemes
+    * Using Jupyter notebook color schemes
+    * Using Matplotlib color schemes from Jupyter
 
-<img src="/img/Monokai.png" width="300px" alt="Monokai" />
+* For the ambitious: how to modify base16-jupyter?
+    * Installing dependencies
+    * Building custom Jupyter CSS
+    * Matplotlib configuration
 
-## Quick Start
+* For the overachiever: how to make own color schemes?
 
-### Installing Prereqs
 
-Templates for building CSS files requires Mustache templates,
-which requires `pystache`:
 
-```
-pip install pystache
-```
+--------------------------------------------------------
 
-### Use Existing Jupyter Style Configurations
 
-The main point of the repo is to give you 
-a Jupyter notebook custom configuration 
-directory with custom CSS to apply base16
-color themes.
 
-These are already built and ready to go 
-in the `configs` directory.
+## Well... What The Hell Is It?
+
+This repository gives you some cool dark/light color schemes 
+for Jupyter notebooks, plus associated matplotlib plot styles.
+
+How does it work? To run Jupyter with custom CSS, you can just
+point Jupyter to a custom configuration directory when you run it.
+
+To use custom matplotlib colors, you have to install
+a notebook extension first.
+
+
+
+## For The Lazy: How Do I Get Started Using Existing Color Schemes?
+
+The main point of this repo is not just to give you the tools you need
+to make your own Jupyter/Matplotlib color schemes, but to provide 
+a usable bundle of Jupyter and matplotlib config files, so you can
+use this package right out of the box.
+
+### Using Jupyter Notebook Color Schemes
+
+In the `configs` directory, there are a number of 
+custom configuration directories, each with their own
+CSS file to apply a base 16 color scheme to a Jupyter
+notebook. 
+
+Each color scheme has its own directory in `configs`.
 
 To run juyter notebook specifying a custom theme,
 edit `$JUPYTER_CONFIG_DIR` before running the 
@@ -54,23 +73,71 @@ nbconvert:
 JUPYTER_CONFIG_DIR=configs/bespin jupyter nbconvert --to html mynotebook.ipynb
 ```
 
-### Building Jupyter Style Configurations
+### Using Matplotlib Color Schemes From Jupyter
 
-**Don't edit the .css files directly.**
+TODO
 
-The CSS files are automatically created from
-the templates in `templates/`.
 
-To remake the CSS style files and the Jupyter 
-custom config directories:
+
+## For The Ambitious: How Do I Modify base16-jupyter? 
+
+### Installing Dependencies
+
+Templates for building CSS files requires Mustache templates,
+which requires `pystache`:
 
 ```
-python build.py
+pip install pystache
 ```
 
-This should be done if you have a new 
-color scheme, or if you modify the 
-template files.
+### Building Custom Jupyter CSS
+
+The base16-jupyter package uses CSS to apply style files to Jupyter notebooks.
+
+CSS files are created from a single CSS template in the `templates/` directory.
+
+**To edit the CSS of a base16-jupyter style,
+do not edit the CSS file directly - edit the CSS template.**
+
+Once you've modified the CSS template, you can remake
+the CSS style files and custom Jupyter config directories,
+via the command:
+
+```
+python build.py css
+```
+
+(Run this command from the base16-jupyter repository.)
+
+This should be done if you have added a new color scheme to
+the list of color schemes being built, or if you have 
+modified the template files. 
+
+
+### Matplotlib Configuration
+
+TODO - modifying details? where are they? how copied?
+
+
+
+
+
+## For The Overachiever: How Do I Make My Own Schemes for base16-jupyter? 
+
+The list of color schemes actually built into Jupyter configurations
+and Matplotlib styles is defined in a .yaml file.
+The .yaml file is itself a list of Github repositories,
+each containing the files for a particular color scheme.
+
+To add a new color scheme to the list, simply edit the
+.yaml file and add a repository for a color scheme.
+
+Note that creating your own, brand-new color scheme is
+outside the scope of this document. 
+
+
+
+--------------------------------------------------------
 
 
 
